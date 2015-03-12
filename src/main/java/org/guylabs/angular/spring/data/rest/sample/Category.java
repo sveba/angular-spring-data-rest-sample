@@ -19,7 +19,7 @@ public final class Category {
     String name;
 
     @OneToOne
-    Category parent;
+    Parent parent;
 
     @OneToMany(mappedBy = "category")
     Collection<Item> items;
@@ -27,13 +27,13 @@ public final class Category {
     private Category() {
     }
 
-    private Category(String name, Category parent, Collection<Item> items) {
+    private Category(String name, Parent parent, Collection<Item> items) {
         this.name = name;
         this.parent = parent;
         this.items = items;
     }
 
-    public static Category from(String name, Category parent, Collection<Item> items) {
+    public static Category from(String name, Parent parent, Collection<Item> items) {
         Assert.isTrue(!StringUtils.isEmpty(name), "The name must not be empty");
         Assert.isTrue(items != null, "The items must not be null");
         return new Category(name, parent, items);
@@ -47,7 +47,7 @@ public final class Category {
         return name;
     }
 
-    public Category getParent() {
+    public Parent getParent() {
         return parent;
     }
 

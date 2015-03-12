@@ -10,6 +10,7 @@ buildscript {
 apply plugin: 'java'
 apply plugin: 'spring-boot'
 apply plugin:'application'
+apply plugin: 'eclipse'
 
 mainClassName = "org.guylabs.angular.spring.data.rest.sample.Application"
 

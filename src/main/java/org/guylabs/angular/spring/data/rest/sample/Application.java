@@ -25,17 +25,24 @@ public class Application extends RepositoryRestMvcConfiguration {
         ConfigurableApplicationContext context = SpringApplication.run(Application.class);
         CategoryRepository categoryRepository = context.getBean(CategoryRepository.class);
         ItemRepository itemRepository = context.getBean(ItemRepository.class);
+        ParentRepository parentRepository = context.getBean(ParentRepository.class);
 
+        Parent parent1 = Parent.from("Parent 1");
+        Parent parent2 = Parent.from("Parent 2");
+        Parent parent3 = Parent.from("Parent 3");
+        parentRepository.save(parent1);
+        parentRepository.save(parent2);
+        parentRepository.save(parent3);
+        
         // save a couple of categories
-        Category firstCategory = categoryRepository.save(Category.from("Parent Category 1", null, new ArrayList<Item>()));
-        categoryRepository.save(Category.from("Child Category 1", firstCategory, new ArrayList<Item>()));
-        categoryRepository.save(Category.from("Child Category 2", firstCategory, new ArrayList<Item>()));
-        categoryRepository.save(Category.from("Parent Category 2", null, new ArrayList<Item>()));
-        Category secondCategory = categoryRepository.save(Category.from("Parent Category 3", null, new ArrayList<Item>()));
-        categoryRepository.save(Category.from("Child Category 3", secondCategory, new ArrayList<Item>()));
-        categoryRepository.save(Category.from("Child Category 4", secondCategory, new ArrayList<Item>()));
-        categoryRepository.save(Category.from("Child Category 5", secondCategory, new ArrayList<Item>()));
-
+        Category firstCategory = Category.from("Child Category 1", parent1, new ArrayList<Item>());
+		categoryRepository.save(firstCategory);
+        Category secondCategory = Category.from("Child Category 2", parent1, new ArrayList<Item>());
+		categoryRepository.save(secondCategory);
+        categoryRepository.save(Category.from("Child Category 3", parent1, new ArrayList<Item>()));
+        categoryRepository.save(Category.from("Child Category 4", parent2, new ArrayList<Item>()));
+        categoryRepository.save(Category.from("Child Category 5", parent3, new ArrayList<Item>()));
+        
         // save a couple of items
         itemRepository.save(Item.from("Item 1", null));
         itemRepository.save(Item.from("Item 2", firstCategory));
